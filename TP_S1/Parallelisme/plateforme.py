@@ -8,8 +8,8 @@ class Plateforme(Patron):
     NOT_FULL = "not_full"
 
 
-    def __init__(self, voies):
-        super().__init__('Plateforme')
+    def __init__(self, context, voies):
+        super(Plateforme, self).__init__('Plateforme', context, voies)
         self.etat = Plateforme.NOT_FULL
         self.nb_train = 0
         self.voies = voies
@@ -40,4 +40,5 @@ class Plateforme(Patron):
                 else:
                     self.mq_sender.publish(Message.GARE_VIDE, "operateur")
 
-        self.mq_receiver = MQ_receiver('localhost', 'platforme', gestion_message)
+            mq_receiver = MQ_receiver('localhost', 'platforme', gestion_message)
+            mq_receiver.start_reiceive()

@@ -1,13 +1,17 @@
 import multiprocessing
 
+
 class Patron:
-    def __init__(self, name):
+    def __init__(self, name, context):
+        context[name] = self
         self.name = name
+        self.context = context
         self.process = multiprocessing.Process(target=self.run)
-        self.parent_pipe, self.child_pipe = multiprocessing.Pipe()
+        self.parent, self.child = multiprocessing.Pipe()
+        self.etat = None
 
     def print(self, msg):
-        print(self.name + " " + msg)
+        print(self.name + ": " + msg)
 
     def start(self):
         self.process.start()
@@ -17,3 +21,6 @@ class Patron:
 
     def run(self):
         raise NotImplementedError
+
+    def envoie_message(self, destinataire, msg):
+        self.context[destinataire].parent.send(msg)

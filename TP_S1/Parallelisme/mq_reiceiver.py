@@ -26,20 +26,21 @@ class MQ_receiver:
         except ValueError:
             logging.error("Ip adress not found")
 
+        self.t1 = threading.Thread(target=self.channel.start_consuming)
+        self.t1.start()
+
+    def start_reiceive(self):
+
         def callback(ch, method, properties, body):
             """Executed when a message was received"""
             body = body.decode()
             self.function_to_call(body)
 
-        self.tag = self.channel.basic_consume(callback,
+        self.channel.basic_consume(callback,
                                    queue=self.queue_name,
                                    no_ack=True)
-
-        self.t1 = threading.Thread(target=self.channel.start_consuming)
-        self.t1.start()
+        self.channel.start_consuming()
 
     def close(self):
-        """Stop consuming the message, and close the connection"""
-        self.channel.stop_consuming(self.tag)
-        self.t1.join()
+        self.channel.stop_consuming()
         self.connection.close()
