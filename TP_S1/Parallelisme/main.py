@@ -1,23 +1,19 @@
-from time import sleep
-from patron import Patron
-from message import Message
-from threading import Thread
 from plateforme import Plateforme
-from multiprocessing import Pipe
-from train import Train
+from transit import Transit
 from operateur import Operateur
 from actor import Actor
-
 
 if __name__ == '__main__':
     context = dict()
 
-    parts = [Operateur, Plateforme]
+    parts = [Operateur, Transit]
     objs_parts = []
     actor = Actor(context)
 
     for p in parts:
         objs_parts += [p(context)]
+
+    objs_parts.append(Plateforme(context, input('Combien de train souhaitez vous dans votre gare?')))
 
     for p in objs_parts:
         p.launch()
