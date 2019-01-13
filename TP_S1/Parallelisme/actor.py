@@ -18,8 +18,8 @@ class Actor(Patron):
 
         if command == 'retrait':
             self.envoie_message('Plateforme', Message(Message.PRINT_TRAINS, None, None))
-            id_train = input('Quel train souhaitez vous retirer de la gare? Sélectionnez le avec l\'id')
-            id_train = int(id_train)
+            print('Quel train souhaitez vous retirer de la gare? Sélectionnez le avec l\'id')
+            id_train = int(input())
             self.envoie_message('Plateforme', Message(Message.SORTI_TRAIN, Train(id_train), None))
 
         elif command == 'ajout':

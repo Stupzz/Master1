@@ -16,9 +16,11 @@ class Transit(Patron):
         msg = self.child.recv()
 
         if msg.type == Message.START_TRANSIT:
-            print('Le train: ' + str(msg.train) + ' entre en transit')
+            print(str(msg.train) + ' entre en transit')
             sleep(2)
-            print('Le train: ' + str(msg.train) + ' sort du transit')
+            print(str(msg.train) + ' sort du transit')
+            print("Commands: ajout, retrait")
+            print("->")
             self.envoie_message('Operateur', Message(Message.FIN_TRANSIT, None, None))
 
         elif msg.type == Message.STOP:

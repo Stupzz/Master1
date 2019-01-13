@@ -23,6 +23,8 @@ class Operateur(Patron):
         if msg.type == Message.DEMANDE_SORTI:
             if not self.en_transit:
                 self.make_transit(msg.train)
+                print(str(msg.train) + " a était accepté pour sortir de la gare")
+                self.envoie_message('Plateforme', Message(Message.SORT_TRAIN, msg.train, None))
             else:
                 self.trains_en_sortie.append(msg.train)
 

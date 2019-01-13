@@ -1,5 +1,6 @@
 from patron import Patron
 from message import Message
+from time import sleep
 
 
 class Plateforme(Patron):
@@ -18,21 +19,27 @@ class Plateforme(Patron):
 
         if msg.type == Message.SORTI_TRAIN:
             for train in self.trains:
-                if train == msg.train:
+                if str(train.id) == str(msg.train.id):
+                    print("ici")
                     self.envoie_message('Operateur', Message(Message.DEMANDE_SORTI, msg.train, None))
                     break
 
         elif msg.type == Message.SORT_TRAIN:
-            self.trains.remove(msg.trains)
+            for train in self.trains:
+                if str(train.id) == str(msg.train.id):
+                    self.trains.remove(train)
+                    break
 
         elif msg.type == Message.DEMANDE_ENTREE:
             if len(self.trains) < self.nb_max_trains:
                 self.envoie_message('Operateur', Message(Message.REPONSE_ENTREE, None, True))
                 self.trains.append(msg.train)
+                print(str(msg.train) + ' Le train est accepter en gare')
             else:
                 self.envoie_message('Operateur', Message(Message.REPONSE_ENTREE, None, False))
 
         elif msg.type == Message.PRINT_TRAINS:
+            sleep(0.2)
             for train in self.trains:
                 print(train)
 
