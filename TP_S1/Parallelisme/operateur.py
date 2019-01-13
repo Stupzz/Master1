@@ -33,22 +33,24 @@ class Operateur(Patron):
                 self.make_transit(self.trains_en_entree.pop(0))
             else:
                 if len(self.trains_en_sortie) > 0:
-                    train = self.trains_en_sortie.pop(0)
-                    self.make_transit(train)
+                    self.sort_train()
 
         elif msg.type == Message.ENTREE_TRAIN:
             self.trains_en_entree.append(msg.train)
             if not self.en_transit:
                 if len(self.trains_en_entree) == 1:
                     self.envoie_message('Plateforme', Message(Message.DEMANDE_ENTREE, self.trains_en_entree[0], None))
+                else:
+                    print(str(msg.train) + " a était ajouter à la file d'attente")
 
         elif msg.type == Message.FIN_TRANSIT:
             self.en_transit = False
             if len(self.trains_en_entree) > 0:
                 self.envoie_message('Plateforme', Message(Message.DEMANDE_ENTREE, self.trains_en_entree[0], None))
             elif len(self.trains_en_sortie) > 0:
-                train = self.trains_en_sortie.pop(0)
-                self.make_transit(train)
+                self.sort_train()
+            else:
+                self.affiche_commande()
 
 
         elif msg.type == Message.STOP:
@@ -60,3 +62,12 @@ class Operateur(Patron):
         self.en_transit = True
         self.envoie_message('Transit', Message(Message.START_TRANSIT, train, None))
 
+    def sort_train(self):
+        train = self.trains_en_sortie.pop(0)
+        print(str(train) + " a était accepté pour sortir de la gare")
+        self.envoie_message('Plateforme', Message(Message.SORT_TRAIN, train, None))
+        self.make_transit(train)
+
+    def affiche_commande(self):
+        print("Commands: ajout, retrait, ajout_multiple, clear_gare, print_gare, stop")
+        print("->")

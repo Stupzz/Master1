@@ -4,6 +4,7 @@ class Message:
     SORTI_TRAIN = "sorti train"
     DEMANDE_ENTREE = "demande entree"
     PRINT_TRAINS = "print trains"
+    VIDE_GARE = "vide gare"
 
     #Pour l'operateur
     DEMANDE_SORTI = "demande sorti"

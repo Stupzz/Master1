@@ -20,7 +20,6 @@ class Plateforme(Patron):
         if msg.type == Message.SORTI_TRAIN:
             for train in self.trains:
                 if str(train.id) == str(msg.train.id):
-                    print("ici")
                     self.envoie_message('Operateur', Message(Message.DEMANDE_SORTI, msg.train, None))
                     break
 
@@ -39,9 +38,12 @@ class Plateforme(Patron):
                 self.envoie_message('Operateur', Message(Message.REPONSE_ENTREE, None, False))
 
         elif msg.type == Message.PRINT_TRAINS:
-            sleep(0.2)
             for train in self.trains:
                 print(train)
+
+        elif msg.type == Message.VIDE_GARE:
+            for train in self.trains:
+                self.envoie_message('Operateur', Message(Message.DEMANDE_SORTI, train, None))
 
         elif msg.type == Message.STOP:
             return False

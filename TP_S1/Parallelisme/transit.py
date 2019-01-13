@@ -18,9 +18,7 @@ class Transit(Patron):
         if msg.type == Message.START_TRANSIT:
             print(str(msg.train) + ' entre en transit')
             sleep(2)
-            print(str(msg.train) + ' sort du transit')
-            print("Commands: ajout, retrait")
-            print("->")
+            #print(str(msg.train) + ' sort du transit')
             self.envoie_message('Operateur', Message(Message.FIN_TRANSIT, None, None))
 
         elif msg.type == Message.STOP:
