@@ -8,12 +8,11 @@ class Patron:
         self.context = context
         self.process = multiprocessing.Process(target=self.run)
         self.parent, self.child = multiprocessing.Pipe()
-        self.etat = None
 
     def print(self, msg):
         print(self.name + ": " + msg)
 
-    def start(self):
+    def launch(self):
         self.process.start()
 
     def join(self):
