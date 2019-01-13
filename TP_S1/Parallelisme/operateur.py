@@ -34,6 +34,8 @@ class Operateur(Patron):
             else:
                 if len(self.trains_en_sortie) > 0:
                     self.sort_train()
+                else:
+                    self.affiche_commande()
 
         elif msg.type == Message.ENTREE_TRAIN:
             self.trains_en_entree.append(msg.train)
