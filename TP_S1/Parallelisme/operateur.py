@@ -71,5 +71,4 @@ class Operateur(Patron):
         self.make_transit(train)
 
     def affiche_commande(self):
-        print("Commands: ajout, retrait, ajout_multiple, clear_gare, print_gare, stop")
-        print("->")
+        print("Commands: ajout, retrait, ajout_multiple, clear_gare, print_gare, stop?")

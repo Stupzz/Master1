@@ -13,8 +13,7 @@ class Actor(Patron):
             sleep(0.2)
 
     def command(self):
-        print("Commands: ajout, retrait, ajout_multiple, clear_gare, print_gare, stop")
-        print('-> ')
+        print("Commands: ajout, retrait, ajout_multiple, clear_gare, print_gare, stop?")
         command = input()
 
         if command == 'retrait':

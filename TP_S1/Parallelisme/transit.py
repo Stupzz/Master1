@@ -14,7 +14,7 @@ class Transit(Patron):
 
     def attente_msg(self):
         msg = self.child.recv()
-
+        print(msg)
         if msg.type == Message.START_TRANSIT:
             print(str(msg.train) + ' entre en transit')
             sleep(2)
